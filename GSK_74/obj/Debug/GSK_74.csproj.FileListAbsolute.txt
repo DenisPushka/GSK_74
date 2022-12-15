@@ -1,0 +1,10 @@
+C:\Users\User\source\repos\GSK_74\GSK_74\bin\Debug\GSK_74.exe.config
+C:\Users\User\source\repos\GSK_74\GSK_74\bin\Debug\GSK_74.exe
+C:\Users\User\source\repos\GSK_74\GSK_74\bin\Debug\GSK_74.pdb
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.Properties.Resources.resources
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.csproj.GenerateResource.cache
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.exe
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.pdb
+C:\Users\User\source\repos\GSK_74\GSK_74\obj\Debug\GSK_74.Form1.resources
