@@ -37,6 +37,7 @@ namespace GSK_74
             this.comboBoxTMO = new System.Windows.Forms.ComboBox();
             this.buttonTMO = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBoxVertex = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@ namespace GSK_74
             // 
             this.comboBoxColor.FormattingEnabled = true;
             this.comboBoxColor.Items.AddRange(new object[] {"Черный", "Красный", "Зеленый", "Синий"});
-            this.comboBoxColor.Location = new System.Drawing.Point(585, 12);
+            this.comboBoxColor.Location = new System.Drawing.Point(520, 12);
             this.comboBoxColor.Name = "comboBoxColor";
             this.comboBoxColor.Size = new System.Drawing.Size(121, 21);
             this.comboBoxColor.TabIndex = 1;
@@ -64,8 +65,8 @@ namespace GSK_74
             // comboBoxFigures
             // 
             this.comboBoxFigures.FormattingEnabled = true;
-            this.comboBoxFigures.Items.AddRange(new object[] {"Кубический сплайн", "Параллелограмм", "Флаг"});
-            this.comboBoxFigures.Location = new System.Drawing.Point(585, 66);
+            this.comboBoxFigures.Items.AddRange(new object[] {"Кубический сплайн", "Правильный многоугольник", "Стрелка 1"});
+            this.comboBoxFigures.Location = new System.Drawing.Point(647, 12);
             this.comboBoxFigures.Name = "comboBoxFigures";
             this.comboBoxFigures.Size = new System.Drawing.Size(121, 21);
             this.comboBoxFigures.TabIndex = 2;
@@ -75,17 +76,17 @@ namespace GSK_74
             // comboBoxGeometric
             // 
             this.comboBoxGeometric.FormattingEnabled = true;
-            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот вокруг заданного центра относительно заданного центра", "Зеркальное отражение относительно заданного центра", "Зеркальное отражение относительно прямой общего порядка"});
+            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот относительно заданного центра", "Масштабирование по ОХ относительно заданного центра", "Зеркальное отражение относительно прямой общего положения"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
-            this.comboBoxGeometric.Size = new System.Drawing.Size(294, 21);
+            this.comboBoxGeometric.Size = new System.Drawing.Size(401, 21);
             this.comboBoxGeometric.TabIndex = 3;
             this.comboBoxGeometric.Text = "Геометрическое преобразование";
             this.comboBoxGeometric.SelectedIndexChanged += new System.EventHandler(this.comboBoxGeometric_SelectedIndexChanged);
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(598, 415);
+            this.buttonClear.Location = new System.Drawing.Point(830, 415);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 23);
             this.buttonClear.TabIndex = 4;
@@ -97,7 +98,7 @@ namespace GSK_74
             // 
             this.comboBoxTMO.FormattingEnabled = true;
             this.comboBoxTMO.Items.AddRange(new object[] {"Объединение", "Симметричная разность"});
-            this.comboBoxTMO.Location = new System.Drawing.Point(512, 155);
+            this.comboBoxTMO.Location = new System.Drawing.Point(520, 83);
             this.comboBoxTMO.Name = "comboBoxTMO";
             this.comboBoxTMO.Size = new System.Drawing.Size(121, 21);
             this.comboBoxTMO.TabIndex = 5;
@@ -106,7 +107,7 @@ namespace GSK_74
             // 
             // buttonTMO
             // 
-            this.buttonTMO.Location = new System.Drawing.Point(512, 182);
+            this.buttonTMO.Location = new System.Drawing.Point(544, 110);
             this.buttonTMO.Name = "buttonTMO";
             this.buttonTMO.Size = new System.Drawing.Size(75, 23);
             this.buttonTMO.TabIndex = 6;
@@ -116,18 +117,29 @@ namespace GSK_74
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(502, 320);
+            this.textBox1.Location = new System.Drawing.Point(502, 287);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 7;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // comboBoxVertex
+            // 
+            this.comboBoxVertex.FormattingEnabled = true;
+            this.comboBoxVertex.Items.AddRange(new object[] {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"});
+            this.comboBoxVertex.Location = new System.Drawing.Point(774, 12);
+            this.comboBoxVertex.Name = "comboBoxVertex";
+            this.comboBoxVertex.Size = new System.Drawing.Size(131, 21);
+            this.comboBoxVertex.TabIndex = 8;
+            this.comboBoxVertex.Text = "Количество вершин";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(915, 450);
+            this.Controls.Add(this.comboBoxVertex);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonTMO);
             this.Controls.Add(this.comboBoxTMO);
@@ -142,6 +154,8 @@ namespace GSK_74
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ComboBox comboBoxVertex;
 
         private System.Windows.Forms.TextBox textBox1;
 

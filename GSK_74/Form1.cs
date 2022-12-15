@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GSK_74
@@ -17,7 +13,7 @@ namespace GSK_74
         /// <summary>
         ///  Буффер
         /// </summary>
-        private readonly Bitmap bitmap;
+        private readonly Bitmap _bitmap;
 
         /// <summary>
         ///  Множество для ТМО
@@ -27,7 +23,7 @@ namespace GSK_74
         /// <summary>
         ///  Массив для совместной обработки исходных границ сегмента
         /// </summary>
-        private M[] arrayM;
+        private M[] _arrayM;
 
         /// <summary>
         ///  Цвет закрашивания фигуры
@@ -35,14 +31,9 @@ namespace GSK_74
         private readonly Pen _drawPen = new Pen(Color.Black, 1);
 
         /// <summary>
-        ///  Проверка на кривой Безье
-        /// </summary>
-        private bool _cubeSpline;
-
-        /// <summary>
         ///  Выбор операции
         /// </summary>
-        private int _operation = 0;
+        private int _operation;
 
         /// <summary>
         /// Тип фигуры
@@ -64,8 +55,8 @@ namespace GSK_74
         public Form1()
         {
             InitializeComponent();
-            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            _graphics = Graphics.FromImage(bitmap);
+            _bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            _graphics = Graphics.FromImage(_bitmap);
             _points = new List<MyPoint>();
             _figures = new List<List<MyPoint>>();
             MouseWheel += Geometric;
@@ -90,19 +81,11 @@ namespace GSK_74
                         CreateCubeSpline();
                         break;
                     case 'p':
-                    {
-                        if (_points.Count < 2)
-                        {
-                            AddPoint(e);
-                            return;
-                        }
-
-                        CreateParallelogram();
+                        CreateRegularPolygon(e);
                         _points.Clear();
                         break;
-                    }
                     default:
-                        CreateFlag(e);
+                        CreateStrelka1(e);
                         break;
                 }
 
@@ -120,7 +103,7 @@ namespace GSK_74
                 _points.Clear();
             }
 
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Поиск мин/макс Y
@@ -147,19 +130,19 @@ namespace GSK_74
         private void CreateCubeSpline()
         {
             var function = new List<MyPoint>();
-            var l = new[] {new MyPoint(), new MyPoint(), new MyPoint(), new MyPoint()};
-            var pv1 = _points[0];
-            var pv2 = _points[0];
+            var l = new PointF[4];
+            var pv1 = _points[0].ToPoint();
+            var pv2 = _points[0].ToPoint();
 
             const double dt = 0.04;
             double t = 0;
             double xt, yt;
             Point ppred = _points[0].ToPoint(), pt = _points[0].ToPoint();
 
-            pv1.X = 4 * (_points[1].X - _points[0].X);
-            pv1.Y = 4 * (_points[1].Y - _points[0].Y);
-            pv2.X = 4 * (_points[3].X - _points[2].X);
-            pv2.Y = 4 * (_points[3].Y - _points[2].Y);
+            pv1.X = (int) (4 * (_points[1].X - _points[0].X));
+            pv1.Y = (int) (4 * (_points[1].Y - _points[0].Y));
+            pv2.X = (int) (4 * (_points[3].X - _points[2].X));
+            pv2.Y = (int) (4 * (_points[3].Y - _points[2].Y));
 
             l[0].X = 2 * _points[0].X - 2 * _points[2].X + pv1.X + pv2.X; // Ax
             l[0].Y = 2 * _points[0].Y - 2 * _points[2].Y + pv1.Y + pv2.Y; // Ay
@@ -187,31 +170,36 @@ namespace GSK_74
             _figures.Add(function);
         }
 
-        private void CreateParallelogram()
+        private void CreateRegularPolygon(MouseEventArgs e)
         {
-            var a = _points[_points.Count - 2];
-            var b = _points[_points.Count - 1];
-            var parallelogram = new List<MyPoint>
+            var count = comboBoxVertex.SelectedIndex + 3;
+            var points = new List<MyPoint>();
+            const int length = 30;
+            var r = length / (2 * Math.Sin(Math.PI / count));
+            for (var angle = 0.0; angle <= 2 * Math.PI; angle += 2 * Math.PI / count)
             {
-                new MyPoint(a.X, a.Y),
-                new MyPoint(a.X + (b.X - a.X) / 3, b.Y),
-                new MyPoint(b.X, b.Y),
-                new MyPoint(b.X - (b.X - a.X) / 3, a.Y)
-            };
-            _figures.Add(parallelogram);
+                var x = (int) (r * Math.Cos(angle));
+                var y = (int) (r * Math.Sin(angle));
+                points.Add(new MyPoint((float) (r + x), (float) (r + y)));
+            }
+
+            _figures.Add(points);
+            ToAndFromCenter(false, new MyPoint(e.X - length, e.Y - length), _figures[_figures.Count - 1]);
         }
 
-        private void CreateFlag(MouseEventArgs e)
+        private void CreateStrelka1(MouseEventArgs e)
         {
-            var flag = new List<MyPoint>
+            var points = new List<MyPoint>
             {
-                new MyPoint(e.X - 100, e.Y - 50),
-                new MyPoint(e.X + 100, e.Y - 50),
-                new MyPoint(e.X, e.Y),
-                new MyPoint(e.X + 100, e.Y + 50),
-                new MyPoint(e.X - 100, e.Y + 50)
+                new MyPoint(e.X - 100, e.Y - 20),
+                new MyPoint(e.X + 10, e.Y - 20),
+                new MyPoint(e.X + 10, e.Y - 50),
+                new MyPoint(e.X + 100, e.Y),
+                new MyPoint(e.X + 10, e.Y + 50),
+                new MyPoint(e.X + 10, e.Y + 20),
+                new MyPoint(e.X - 100, e.Y + 20)
             };
-            _figures.Add(flag);
+            _figures.Add(points);
         }
 
         #endregion
@@ -222,7 +210,7 @@ namespace GSK_74
             if (_points.Count > 1)
                 _graphics.DrawLine(_drawPen, _points[_points.Count - 2].ToPoint(),
                     _points[_points.Count - 1].ToPoint());
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         private void Fill(List<MyPoint> pointFs)
@@ -256,11 +244,11 @@ namespace GSK_74
                 xs.Clear();
             }
 
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Проверка пересичения прямой Y c отрезком
-        private List<float> CheckIntersection(List<float> xs, int i, int k, int y, List<MyPoint> pointFs)
+        private static List<float> CheckIntersection(List<float> xs, int i, int k, int y, List<MyPoint> pointFs)
         {
             if (Check(i, k, y, pointFs))
             {
@@ -274,7 +262,7 @@ namespace GSK_74
         }
 
         // Условие пересечения
-        private bool Check(int i, int k, int y, List<MyPoint> pointFs) =>
+        private static bool Check(int i, int k, int y, List<MyPoint> pointFs) =>
             (pointFs[i].Y < y && pointFs[k].Y >= y) || (pointFs[i].Y >= y && pointFs[k].Y < y);
 
         #region ТМО
@@ -283,84 +271,84 @@ namespace GSK_74
         private void Tmo()
         {
             var figure1 = _figures[0];
-            figure1[0].DoTMO = true;
+            figure1[0].DoTmo = true;
             var figure2 = _figures[1];
-            figure2[0].DoTMO = true;
+            figure2[0].DoTmo = true;
             var arr = SearchYMinAndMax(figure1);
             var arr2 = SearchYMinAndMax(figure2);
             var minY = arr[0] < arr2[0] ? arr[0] : arr2[0];
             var maxY = arr[1] > arr2[1] ? arr[1] : arr2[1];
-            for (var Y = (int) minY; Y < maxY; Y++)
+            for (var y = (int) minY; y < maxY; y++)
             {
-                var A = CalculationListXrAndXl(Y, figure1);
-                List<float> xAl = A[0];
-                List<float> xAr = A[1];
-                var B = CalculationListXrAndXl(Y, figure2);
-                List<float> xBl = B[0];
-                List<float> xBr = B[1];
+                var a = CalculationListXrAndXl(y, figure1);
+                List<float> xAl = a[0];
+                List<float> xAr = a[1];
+                var b = CalculationListXrAndXl(y, figure2);
+                List<float> xBl = b[0];
+                List<float> xBr = b[1];
                 if (xAl.Count == 0 && xBl.Count == 0)
                     continue;
 
-                arrayM = new M[xAl.Count * 2 + xBl.Count * 2];
+                _arrayM = new M[xAl.Count * 2 + xBl.Count * 2];
                 for (var i = 0; i < xAl.Count; i++)
-                    arrayM[i] = new M(xAl[i], 2);
+                    _arrayM[i] = new M(xAl[i], 2);
 
                 var nM = xAl.Count;
                 for (var i = 0; i < xAr.Count; i++)
-                    arrayM[nM + i] = new M(xAr[i], -2);
+                    _arrayM[nM + i] = new M(xAr[i], -2);
 
                 nM += xAr.Count;
                 for (var i = 0; i < xBl.Count; i++)
-                    arrayM[nM + i] = new M(xBl[i], 1);
+                    _arrayM[nM + i] = new M(xBl[i], 1);
 
                 nM += xBl.Count;
                 for (var i = 0; i < xBr.Count; i++)
-                    arrayM[nM + i] = new M(xBr[i], -1);
+                    _arrayM[nM + i] = new M(xBr[i], -1);
                 nM += xBr.Count;
 
                 // Сортировка
-                for (var write = 0; write < arrayM.Length; write++)
-                for (var sort = 0; sort < arrayM.Length - 1; sort++)
-                    if (arrayM[sort].X > arrayM[sort + 1].X)
+                for (var write = 0; write < _arrayM.Length; write++)
+                for (var sort = 0; sort < _arrayM.Length - 1; sort++)
+                    if (_arrayM[sort].X > _arrayM[sort + 1].X)
                     {
-                        var buuf = new M(arrayM[sort + 1].X, arrayM[sort + 1].Dq);
-                        arrayM[sort + 1] = arrayM[sort];
-                        arrayM[sort] = buuf;
+                        var buuf = new M(_arrayM[sort + 1].X, _arrayM[sort + 1].Dq);
+                        _arrayM[sort + 1] = _arrayM[sort];
+                        _arrayM[sort] = buuf;
                     }
 
-                var Q = 0;
+                var q = 0;
                 List<int> xrl = new List<int>();
                 List<int> xrr = new List<int>();
                 // Особый случай для правой границы сегмента
-                if (arrayM[0].X >= 0 && arrayM[0].Dq < 0)
+                if (_arrayM[0].X >= 0 && _arrayM[0].Dq < 0)
                 {
                     xrl.Add(0);
-                    Q = -arrayM[1].Dq;
+                    q = -_arrayM[1].Dq;
                 }
 
                 for (var i = 0; i < nM; i++)
                 {
-                    var x = arrayM[i].X;
-                    var Qnew = Q + arrayM[i].Dq;
-                    if (!IncludeQInSetQ(Q) && IncludeQInSetQ(Qnew))
+                    var x = _arrayM[i].X;
+                    var qnew = q + _arrayM[i].Dq;
+                    if (!IncludeQInSetQ(q) && IncludeQInSetQ(qnew))
                         xrl.Add((int) x);
-                    else if (IncludeQInSetQ(Q) && !IncludeQInSetQ(Qnew))
+                    else if (IncludeQInSetQ(q) && !IncludeQInSetQ(qnew))
                         xrr.Add((int) x);
 
-                    Q = Qnew;
+                    q = qnew;
                 }
 
                 // Если не найдена правая граница последнего сегмента
-                if (IncludeQInSetQ(Q))
+                if (IncludeQInSetQ(q))
                     xrr.Add(pictureBox1.Height);
 
                 for (var i = 0; i < xrr.Count; i++)
-                    _graphics.DrawLine(_drawPen, new Point(xrr[i], Y), new Point(xrl[i], Y));
+                    _graphics.DrawLine(_drawPen, new Point(xrr[i], y), new Point(xrl[i], y));
             }
         }
 
         // Нахождение точек пересечения фигуры с прямой Y
-        private List<float>[] CalculationListXrAndXl(int y, List<MyPoint> pointFs)
+        private static List<float>[] CalculationListXrAndXl(int y, List<MyPoint> pointFs)
         {
             var k = 0;
             var xR = new List<float>();
@@ -403,6 +391,9 @@ namespace GSK_74
 
         private int _updateAlpha;
 
+        /// <summary>
+        /// Поворот фигуры
+        /// </summary>
         private void Rotation(int mouse, MouseEventArgs em, List<MyPoint> pointFs)
         {
             float alpha = 0;
@@ -433,35 +424,16 @@ namespace GSK_74
             ToAndFromCenter(false, e, pointFs);
         }
 
+        private static void Calculation(float[,] matrix, List<MyPoint> points)
+        {
+            for (var i = 0; i < points.Count; i++)
+                points[i] = Matrix_1x3_x_3x3(points[i], matrix);
+        }
+
         /// <summary>
         ///  Отражение
         /// </summary>
         private void Mirror(List<MyPoint> points)
-        {
-            var matrix = new float[,]
-            {
-                {-1, 0, 0},
-                {0, -1, 0},
-                {0, 0, 1}
-            };
-
-            var e = CenterFigure(points);
-
-            ToAndFromCenter(true, e, points);
-
-            for (var i = 0; i < points.Count; i++)
-                points[i] = Matrix_1x3_x_3x3(points[i], matrix);
-
-            ToAndFromCenter(false, e, points);
-        }
-
-        private void Calculation(float[,] matrix, List<MyPoint> points)
-        {
-            for (var i = 0; i < points.Count; i++)
-                points[i] = Matrix_1x3_x_3x3(points[i], matrix);
-        }
-
-        private void Mirror2(List<MyPoint> points)
         {
             // Проверку на 2 точки
             var m = new[,]
@@ -512,6 +484,37 @@ namespace GSK_74
             Calculation(m1, points);
         }
 
+        /// <summary>
+        /// Масштабирование
+        /// </summary>
+        /// <param name="zoom">коэфициет увеличения</param>
+        /// <param name="em">центр с координатами</param>
+        /// <param name="points">Фигура</param>
+        private static void Zoom(float[] zoom, MouseEventArgs em, List<MyPoint> points)
+        {
+            if (zoom[0] <= 0) zoom[0] = -0.1f;
+            if (zoom[1] <= 0) zoom[1] = -0.1f;
+            if (zoom[0] >= 0) zoom[0] = 0.1f;
+            if (zoom[1] >= 0) zoom[1] = 0.1f;
+
+            var sx = 1 + zoom[0];
+            const int sy = 1;
+            float[,] matrix =
+            {
+                {sx, 0, 0},
+                {0, sy, 0},
+                {0, 0, 1}
+            };
+
+            var e = new MyPoint(em.X, em.Y);
+            ToAndFromCenter(true, e, points);
+
+            for (var i = 0; i < points.Count; i++)
+                points[i] = Matrix_1x3_x_3x3(points[i], matrix);
+
+            ToAndFromCenter(false, e, points);
+        }
+
         private static void ToAndFromCenter(bool start, MyPoint e, List<MyPoint> pointFs)
         {
             if (start)
@@ -546,31 +549,6 @@ namespace GSK_74
             Function = point.Function
         };
 
-        private MyPoint CenterFigure(List<MyPoint> pointFs)
-        {
-            float[] arrayY, arrayX;
-            var e = new MyPoint();
-            arrayY = SearchYMinAndMax(pointFs);
-            arrayX = SearchXMinAndMax(pointFs);
-            e.X = (arrayX[0] + arrayX[1]) / 2;
-            e.Y = (arrayY[0] + arrayY[1]) / 2;
-            return e;
-        }
-
-        // Поиск мин/макс X
-        private float[] SearchXMinAndMax(List<MyPoint> points)
-        {
-            var min = points[0].X;
-            var max = 0.0f;
-            for (var i = 0; i < points.Count; i++)
-            {
-                min = points[i].X < min ? points[i].X : min;
-                max = points[i].X > max ? points[i].X : max;
-            }
-
-            return new[] {min, max};
-        }
-
         #endregion
 
         #region Выбор пользователя
@@ -579,13 +557,13 @@ namespace GSK_74
         private void Geometric(object sender, MouseEventArgs e)
         {
             var figureBuff = _figures[_figures.Count - 1];
-            if (figureBuff[0].DoTMO)
+            if (figureBuff[0].DoTmo)
             {
                 TransformationGeometric(e, figureBuff);
                 TransformationGeometric(e, _figures[_figures.Count - 2]);
                 _graphics.Clear(Color.White);
                 Tmo();
-                pictureBox1.Image = bitmap;
+                pictureBox1.Image = _bitmap;
             }
             else
                 TransformationGeometric(e, figureBuff);
@@ -600,10 +578,10 @@ namespace GSK_74
                     Rotation(e.Delta, e, buff);
                     break;
                 case 2:
-                    Mirror(buff);
+                    Zoom(new float[] {e.Delta, e.Delta}, e, buff);
                     break;
                 case 3:
-                    Mirror2(buff);
+                    Mirror(buff);
                     break;
             }
 
@@ -615,7 +593,7 @@ namespace GSK_74
         {
             for (var i = 0; i < points.Count - 1; i++)
                 _graphics.DrawLine(_drawPen, points[i].ToPoint(), points[i + 1].ToPoint());
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Выбор цвета
@@ -650,7 +628,7 @@ namespace GSK_74
                     _figure = 'p';
                     break;
                 default:
-                    _figure = 'f';
+                    _figure = 'c';
                     break;
             }
 
@@ -679,14 +657,14 @@ namespace GSK_74
             _points.Clear();
             _figures.Clear();
             _graphics.Clear(Color.White);
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         private void ButtonTmo(object sender, EventArgs e)
         {
             _graphics.Clear(Color.White);
             Tmo();
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         #endregion
@@ -709,7 +687,7 @@ namespace GSK_74
             public float Y;
             public float Third;
             public bool Function;
-            public bool DoTMO;
+            public bool DoTmo;
 
             public MyPoint(float x = 0.0f, float y = 0.0f, float third = 1.0f)
             {
@@ -717,7 +695,7 @@ namespace GSK_74
                 Y = y;
                 Third = third;
                 Function = false;
-                DoTMO = false;
+                DoTmo = false;
             }
 
             public Point ToPoint() => new Point((int) X, (int) Y);
