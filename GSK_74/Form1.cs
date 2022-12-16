@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GSK_74
@@ -37,7 +33,7 @@ namespace GSK_74
         /// <summary>
         ///  Выбор операции
         /// </summary>
-        private int _operation = 0;
+        private int _operation;
 
         /// <summary>
         /// Тип фигуры
@@ -106,7 +102,17 @@ namespace GSK_74
             }
             // Добавление точки
             else if (MouseButtons.Left == e.Button)
+            {
                 AddPoint(e);
+                if (_operation == 3)
+                {
+                    AddPoint(new MyPoint(pictureBox1.Width, _points[_points.Count - 1].Y));
+                    _graphics.DrawLine(_drawPen,
+                        new Point(0, (int) _points[0].Y),
+                        _points[_points.Count - 1].ToPoint());
+                    pictureBox1.Image = _bitmap;
+                }
+            }
             // Рисование и добавление фигуры в общей список фигур
             else
             {
@@ -193,7 +199,7 @@ namespace GSK_74
                 new MyPoint(b.X, b.Y),
                 new MyPoint(b.X - (b.X - a.X) / 3, a.Y)
             };
-            
+
             _figures.Add(parallelogram);
         }
 
@@ -212,9 +218,19 @@ namespace GSK_74
 
         #endregion
 
+        // Добавление точки в список
         private void AddPoint(MouseEventArgs e)
         {
             _points.Add(new MyPoint(e.X, e.Y));
+            if (_points.Count > 1)
+                _graphics.DrawLine(_drawPen, _points[_points.Count - 2].ToPoint(),
+                    _points[_points.Count - 1].ToPoint());
+            pictureBox1.Image = _bitmap;
+        }
+
+        private void AddPoint(MyPoint point)
+        {
+            _points.Add(point);
             if (_points.Count > 1)
                 _graphics.DrawLine(_drawPen, _points[_points.Count - 2].ToPoint(),
                     _points[_points.Count - 1].ToPoint());
@@ -256,7 +272,7 @@ namespace GSK_74
         }
 
         // Проверка пересичения прямой Y c отрезком
-        private List<float> CheckIntersection(List<float> xs, int i, int k, int y, List<MyPoint> pointFs)
+        private static List<float> CheckIntersection(List<float> xs, int i, int k, int y, List<MyPoint> pointFs)
         {
             if (Check(i, k, y, pointFs))
             {
@@ -270,7 +286,7 @@ namespace GSK_74
         }
 
         // Условие пересечения
-        private bool Check(int i, int k, int y, List<MyPoint> pointFs) =>
+        private static bool Check(int i, int k, int y, List<MyPoint> pointFs) =>
             (pointFs[i].Y < y && pointFs[k].Y >= y) || (pointFs[i].Y >= y && pointFs[k].Y < y);
 
         #region ТМО
@@ -433,7 +449,7 @@ namespace GSK_74
         /// Отражение относительно заданного центра
         /// </summary>
         /// <param name="points">Фигура</param>
-        private void Mirror(List<MyPoint> points)
+        private static void Mirror(List<MyPoint> points, MouseEventArgs em)
         {
             var matrix = new float[,]
             {
@@ -442,7 +458,7 @@ namespace GSK_74
                 {0, 0, 1}
             };
 
-            var e = CenterFigure(points);
+            var e = new MyPoint(em.X, em.Y); //CenterFigure(points);
 
             ToAndFromCenter(true, e, points);
 
@@ -452,26 +468,19 @@ namespace GSK_74
             ToAndFromCenter(false, e, points);
         }
 
-        private void Calculation(float[,] matrix, List<MyPoint> points)
+        private static void Calculation(float[,] matrix, List<MyPoint> points)
         {
             for (var i = 0; i < points.Count; i++)
                 points[i] = Matrix_1x3_x_3x3(points[i], matrix);
         }
-        
+
         /// <summary>
         /// Отражение относительно горизонтальноей прямой
         /// </summary>
         /// <param name="points">Фигура</param>
-        private void Mirror2(List<MyPoint> points)
+        private void Mirror(List<MyPoint> points)
         {
-            if (_points.Count < 2) return;
-            var m = new[,]
-            {
-                {1, 0, 0},
-                {0, 1, 0},
-                {-_points[0].X, -_points[0].Y, 1}
-            };
-            Calculation(m, points);
+            ToAndFromCenter(true, _points[0], points);
 
             var a = _points[0];
             var b = _points[1];
@@ -488,6 +497,7 @@ namespace GSK_74
                 {0, 0, 1}
             };
             Calculation(r, points);
+
             var s = new float[,]
             {
                 {1, 0, 0},
@@ -504,13 +514,7 @@ namespace GSK_74
             };
             Calculation(r1, points);
 
-            var m1 = new[,]
-            {
-                {1, 0, 0},
-                {0, 1, 0},
-                {_points[0].X, _points[0].Y, 1}
-            };
-            Calculation(m1, points);
+            ToAndFromCenter(false, _points[0], points);
             _points.Clear();
         }
 
@@ -548,31 +552,6 @@ namespace GSK_74
             Function = point.Function
         };
 
-        private MyPoint CenterFigure(List<MyPoint> pointFs)
-        {
-            float[] arrayY, arrayX;
-            var e = new MyPoint();
-            arrayY = SearchYMinAndMax(pointFs);
-            arrayX = SearchXMinAndMax(pointFs);
-            e.X = (arrayX[0] + arrayX[1]) / 2;
-            e.Y = (arrayY[0] + arrayY[1]) / 2;
-            return e;
-        }
-
-        // Поиск мин/макс X
-        private float[] SearchXMinAndMax(List<MyPoint> points)
-        {
-            var min = points[0].X;
-            var max = 0.0f;
-            for (var i = 0; i < points.Count; i++)
-            {
-                min = points[i].X < min ? points[i].X : min;
-                max = points[i].X > max ? points[i].X : max;
-            }
-
-            return new[] {min, max};
-        }
-
         #endregion
 
         #region Выбор пользователя
@@ -603,10 +582,11 @@ namespace GSK_74
                     Rotation(e.Delta, e, buff);
                     break;
                 case 2:
-                    Mirror(buff);
+                    Mirror(buff, e);
                     break;
                 case 3:
-                    Mirror2(buff);
+                    if (_points.Count == 0) return;
+                    Mirror(buff);
                     break;
             }
 
@@ -694,6 +674,13 @@ namespace GSK_74
 
         #endregion
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void comboBoxGeometric_SelectedIndexChanged(object sender, EventArgs e) =>
+            _operation = comboBoxGeometric.SelectedIndex;
+
         private struct M
         {
             public float X { get; }
@@ -725,12 +712,5 @@ namespace GSK_74
 
             public Point ToPoint() => new Point((int) X, (int) Y);
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void comboBoxGeometric_SelectedIndexChanged(object sender, EventArgs e) =>
-            _operation = comboBoxGeometric.SelectedIndex;
     }
 }

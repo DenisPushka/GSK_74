@@ -75,7 +75,7 @@ namespace GSK_74
             // comboBoxGeometric
             // 
             this.comboBoxGeometric.FormattingEnabled = true;
-            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот вокруг заданного центра относительно заданного центра", "Зеркальное отражение относительно заданного центра", "Зеркальное отражение относительно прямой общего порядка"});
+            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот вокруг заданного центра относительно заданного центра", "Зеркальное отражение относительно заданного центра", "Зеркальное отражение относительно горизонтальной прямой"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
             this.comboBoxGeometric.Size = new System.Drawing.Size(294, 21);
