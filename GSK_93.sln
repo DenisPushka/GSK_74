@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSK_74", "GSK_74\GSK_74.csproj", "{143BBB92-9551-4D2C-90C1-896E2A999412}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSK_93", "GSK_93\GSK_93.csproj", "{143BBB92-9551-4D2C-90C1-896E2A999412}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@
     <ProjectGuid>{143BBB92-9551-4D2C-90C1-896E2A999412}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>GSK_74</RootNamespace>
-    <AssemblyName>GSK_74</AssemblyName>
+    <AssemblyName>GSK_93</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
