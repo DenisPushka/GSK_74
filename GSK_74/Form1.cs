@@ -17,7 +17,7 @@ namespace GSK_74
         /// <summary>
         ///  Буффер
         /// </summary>
-        private readonly Bitmap bitmap;
+        private readonly Bitmap _bitmap;
 
         /// <summary>
         ///  Множество для ТМО
@@ -27,17 +27,12 @@ namespace GSK_74
         /// <summary>
         ///  Массив для совместной обработки исходных границ сегмента
         /// </summary>
-        private M[] arrayM;
+        private M[] _arrayM;
 
         /// <summary>
         ///  Цвет закрашивания фигуры
         /// </summary>
         private readonly Pen _drawPen = new Pen(Color.Black, 1);
-
-        /// <summary>
-        ///  Проверка на кривой Безье
-        /// </summary>
-        private bool _cubeSpline;
 
         /// <summary>
         ///  Выбор операции
@@ -64,8 +59,8 @@ namespace GSK_74
         public Form1()
         {
             InitializeComponent();
-            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            _graphics = Graphics.FromImage(bitmap);
+            _bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            _graphics = Graphics.FromImage(_bitmap);
             _points = new List<MyPoint>();
             _figures = new List<List<MyPoint>>();
             MouseWheel += Geometric;
@@ -120,7 +115,7 @@ namespace GSK_74
                 _points.Clear();
             }
 
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Поиск мин/макс Y
@@ -147,19 +142,19 @@ namespace GSK_74
         private void CreateCubeSpline()
         {
             var function = new List<MyPoint>();
-            var l = new[] {new MyPoint(), new MyPoint(), new MyPoint(), new MyPoint()};
-            var pv1 = _points[0];
-            var pv2 = _points[0];
+            var l = new PointF[4];
+            var pv1 = _points[0].ToPoint();
+            var pv2 = _points[0].ToPoint();
 
             const double dt = 0.04;
             double t = 0;
             double xt, yt;
             Point ppred = _points[0].ToPoint(), pt = _points[0].ToPoint();
 
-            pv1.X = 4 * (_points[1].X - _points[0].X);
-            pv1.Y = 4 * (_points[1].Y - _points[0].Y);
-            pv2.X = 4 * (_points[3].X - _points[2].X);
-            pv2.Y = 4 * (_points[3].Y - _points[2].Y);
+            pv1.X = (int) (4 * (_points[1].X - _points[0].X));
+            pv1.Y = (int) (4 * (_points[1].Y - _points[0].Y));
+            pv2.X = (int) (4 * (_points[3].X - _points[2].X));
+            pv2.Y = (int) (4 * (_points[3].Y - _points[2].Y));
 
             l[0].X = 2 * _points[0].X - 2 * _points[2].X + pv1.X + pv2.X; // Ax
             l[0].Y = 2 * _points[0].Y - 2 * _points[2].Y + pv1.Y + pv2.Y; // Ay
@@ -198,6 +193,7 @@ namespace GSK_74
                 new MyPoint(b.X, b.Y),
                 new MyPoint(b.X - (b.X - a.X) / 3, a.Y)
             };
+            
             _figures.Add(parallelogram);
         }
 
@@ -222,7 +218,7 @@ namespace GSK_74
             if (_points.Count > 1)
                 _graphics.DrawLine(_drawPen, _points[_points.Count - 2].ToPoint(),
                     _points[_points.Count - 1].ToPoint());
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         private void Fill(List<MyPoint> pointFs)
@@ -256,7 +252,7 @@ namespace GSK_74
                 xs.Clear();
             }
 
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Проверка пересичения прямой Y c отрезком
@@ -283,9 +279,9 @@ namespace GSK_74
         private void Tmo()
         {
             var figure1 = _figures[0];
-            figure1[0].DoTMO = true;
+            figure1[0].DoTmo = true;
             var figure2 = _figures[1];
-            figure2[0].DoTMO = true;
+            figure2[0].DoTmo = true;
             var arr = SearchYMinAndMax(figure1);
             var arr2 = SearchYMinAndMax(figure2);
             var minY = arr[0] < arr2[0] ? arr[0] : arr2[0];
@@ -301,47 +297,47 @@ namespace GSK_74
                 if (xAl.Count == 0 && xBl.Count == 0)
                     continue;
 
-                arrayM = new M[xAl.Count * 2 + xBl.Count * 2];
+                _arrayM = new M[xAl.Count * 2 + xBl.Count * 2];
                 for (var i = 0; i < xAl.Count; i++)
-                    arrayM[i] = new M(xAl[i], 2);
+                    _arrayM[i] = new M(xAl[i], 2);
 
                 var nM = xAl.Count;
                 for (var i = 0; i < xAr.Count; i++)
-                    arrayM[nM + i] = new M(xAr[i], -2);
+                    _arrayM[nM + i] = new M(xAr[i], -2);
 
                 nM += xAr.Count;
                 for (var i = 0; i < xBl.Count; i++)
-                    arrayM[nM + i] = new M(xBl[i], 1);
+                    _arrayM[nM + i] = new M(xBl[i], 1);
 
                 nM += xBl.Count;
                 for (var i = 0; i < xBr.Count; i++)
-                    arrayM[nM + i] = new M(xBr[i], -1);
+                    _arrayM[nM + i] = new M(xBr[i], -1);
                 nM += xBr.Count;
 
                 // Сортировка
-                for (var write = 0; write < arrayM.Length; write++)
-                for (var sort = 0; sort < arrayM.Length - 1; sort++)
-                    if (arrayM[sort].X > arrayM[sort + 1].X)
+                for (var write = 0; write < _arrayM.Length; write++)
+                for (var sort = 0; sort < _arrayM.Length - 1; sort++)
+                    if (_arrayM[sort].X > _arrayM[sort + 1].X)
                     {
-                        var buuf = new M(arrayM[sort + 1].X, arrayM[sort + 1].Dq);
-                        arrayM[sort + 1] = arrayM[sort];
-                        arrayM[sort] = buuf;
+                        var buuf = new M(_arrayM[sort + 1].X, _arrayM[sort + 1].Dq);
+                        _arrayM[sort + 1] = _arrayM[sort];
+                        _arrayM[sort] = buuf;
                     }
 
                 var Q = 0;
                 List<int> xrl = new List<int>();
                 List<int> xrr = new List<int>();
                 // Особый случай для правой границы сегмента
-                if (arrayM[0].X >= 0 && arrayM[0].Dq < 0)
+                if (_arrayM[0].X >= 0 && _arrayM[0].Dq < 0)
                 {
                     xrl.Add(0);
-                    Q = -arrayM[1].Dq;
+                    Q = -_arrayM[1].Dq;
                 }
 
                 for (var i = 0; i < nM; i++)
                 {
-                    var x = arrayM[i].X;
-                    var Qnew = Q + arrayM[i].Dq;
+                    var x = _arrayM[i].X;
+                    var Qnew = Q + _arrayM[i].Dq;
                     if (!IncludeQInSetQ(Q) && IncludeQInSetQ(Qnew))
                         xrl.Add((int) x);
                     else if (IncludeQInSetQ(Q) && !IncludeQInSetQ(Qnew))
@@ -434,8 +430,9 @@ namespace GSK_74
         }
 
         /// <summary>
-        ///  Отражение
+        /// Отражение относительно заданного центра
         /// </summary>
+        /// <param name="points">Фигура</param>
         private void Mirror(List<MyPoint> points)
         {
             var matrix = new float[,]
@@ -460,10 +457,14 @@ namespace GSK_74
             for (var i = 0; i < points.Count; i++)
                 points[i] = Matrix_1x3_x_3x3(points[i], matrix);
         }
-
+        
+        /// <summary>
+        /// Отражение относительно горизонтальноей прямой
+        /// </summary>
+        /// <param name="points">Фигура</param>
         private void Mirror2(List<MyPoint> points)
         {
-            // Проверку на 2 точки
+            if (_points.Count < 2) return;
             var m = new[,]
             {
                 {1, 0, 0},
@@ -510,6 +511,7 @@ namespace GSK_74
                 {_points[0].X, _points[0].Y, 1}
             };
             Calculation(m1, points);
+            _points.Clear();
         }
 
         private static void ToAndFromCenter(bool start, MyPoint e, List<MyPoint> pointFs)
@@ -578,14 +580,15 @@ namespace GSK_74
         // Начало геометрических преобразований
         private void Geometric(object sender, MouseEventArgs e)
         {
+            if (_figures.Count == 0) return;
             var figureBuff = _figures[_figures.Count - 1];
-            if (figureBuff[0].DoTMO)
+            if (figureBuff[0].DoTmo)
             {
                 TransformationGeometric(e, figureBuff);
                 TransformationGeometric(e, _figures[_figures.Count - 2]);
                 _graphics.Clear(Color.White);
                 Tmo();
-                pictureBox1.Image = bitmap;
+                pictureBox1.Image = _bitmap;
             }
             else
                 TransformationGeometric(e, figureBuff);
@@ -615,7 +618,7 @@ namespace GSK_74
         {
             for (var i = 0; i < points.Count - 1; i++)
                 _graphics.DrawLine(_drawPen, points[i].ToPoint(), points[i + 1].ToPoint());
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         // Выбор цвета
@@ -679,14 +682,14 @@ namespace GSK_74
             _points.Clear();
             _figures.Clear();
             _graphics.Clear(Color.White);
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         private void ButtonTmo(object sender, EventArgs e)
         {
             _graphics.Clear(Color.White);
             Tmo();
-            pictureBox1.Image = bitmap;
+            pictureBox1.Image = _bitmap;
         }
 
         #endregion
@@ -709,7 +712,7 @@ namespace GSK_74
             public float Y;
             public float Third;
             public bool Function;
-            public bool DoTMO;
+            public bool DoTmo;
 
             public MyPoint(float x = 0.0f, float y = 0.0f, float third = 1.0f)
             {
@@ -717,7 +720,7 @@ namespace GSK_74
                 Y = y;
                 Third = third;
                 Function = false;
-                DoTMO = false;
+                DoTmo = false;
             }
 
             public Point ToPoint() => new Point((int) X, (int) Y);
