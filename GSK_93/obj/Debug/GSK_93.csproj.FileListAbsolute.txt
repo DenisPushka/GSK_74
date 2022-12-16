@@ -8,3 +8,13 @@ C:\Users\User\source\repos\GSK_74\GSK_93\obj\Debug\GSK_93.csproj.CoreCompileInpu
 C:\Users\User\source\repos\GSK_74\GSK_93\obj\Debug\GSK_93.exe
 C:\Users\User\source\repos\GSK_74\GSK_93\obj\Debug\GSK_93.pdb
 C:\Users\User\source\repos\GSK_74\GSK_93\obj\Debug\GSK_93.Form1.resources
+C:\Users\User\source\repos\GSK\G\GSK_93\bin\Debug\GSK_93.exe.config
+C:\Users\User\source\repos\GSK\G\GSK_93\bin\Debug\GSK_93.exe
+C:\Users\User\source\repos\GSK\G\GSK_93\bin\Debug\GSK_93.pdb
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.Form1.resources
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_74.Properties.Resources.resources
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.csproj.GenerateResource.cache
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.exe
+C:\Users\User\source\repos\GSK\G\GSK_93\obj\Debug\GSK_93.pdb

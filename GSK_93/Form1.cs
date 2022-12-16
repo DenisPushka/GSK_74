@@ -634,8 +634,12 @@ namespace GSK_93
                     _setQ = new[] {1, 3};
                     break;
                 case 1:
-                    // симметричная разность
-                    _setQ = new[] {1, 2};
+                    // Разность А/В
+                    _setQ = new[] {2, 2};
+                    break;
+                case 2:
+                    // Разность В/А
+                    _setQ = new[] { 1, 1 };
                     break;
             }
         }

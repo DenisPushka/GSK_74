@@ -38,7 +38,7 @@ namespace GSK_93
             this.buttonTMO = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBoxVertex = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -54,7 +54,11 @@ namespace GSK_93
             // comboBoxColor
             // 
             this.comboBoxColor.FormattingEnabled = true;
-            this.comboBoxColor.Items.AddRange(new object[] {"Черный", "Красный", "Зеленый", "Синий"});
+            this.comboBoxColor.Items.AddRange(new object[] {
+            "Черный",
+            "Красный",
+            "Зеленый",
+            "Синий"});
             this.comboBoxColor.Location = new System.Drawing.Point(520, 12);
             this.comboBoxColor.Name = "comboBoxColor";
             this.comboBoxColor.Size = new System.Drawing.Size(121, 21);
@@ -65,7 +69,10 @@ namespace GSK_93
             // comboBoxFigures
             // 
             this.comboBoxFigures.FormattingEnabled = true;
-            this.comboBoxFigures.Items.AddRange(new object[] {"Кубический сплайн", "Правильный многоугольник", "Стрелка 1"});
+            this.comboBoxFigures.Items.AddRange(new object[] {
+            "Кубический сплайн",
+            "Правильный многоугольник",
+            "Стрелка 1"});
             this.comboBoxFigures.Location = new System.Drawing.Point(647, 12);
             this.comboBoxFigures.Name = "comboBoxFigures";
             this.comboBoxFigures.Size = new System.Drawing.Size(121, 21);
@@ -76,7 +83,11 @@ namespace GSK_93
             // comboBoxGeometric
             // 
             this.comboBoxGeometric.FormattingEnabled = true;
-            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот относительно заданного центра", "Масштабирование по ОХ относительно заданного центра", "Зеркальное отражение относительно прямой общего положения"});
+            this.comboBoxGeometric.Items.AddRange(new object[] {
+            "Закрашивание",
+            "Поворот относительно заданного центра",
+            "Масштабирование по ОХ относительно заданного центра",
+            "Зеркальное отражение относительно прямой общего положения"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
             this.comboBoxGeometric.Size = new System.Drawing.Size(401, 21);
@@ -97,7 +108,10 @@ namespace GSK_93
             // comboBoxTMO
             // 
             this.comboBoxTMO.FormattingEnabled = true;
-            this.comboBoxTMO.Items.AddRange(new object[] {"Объединение", "Симметричная разность"});
+            this.comboBoxTMO.Items.AddRange(new object[] {
+            "Объединение",
+            "Разность A/B",
+            "Разность В/А"});
             this.comboBoxTMO.Location = new System.Drawing.Point(520, 83);
             this.comboBoxTMO.Name = "comboBoxTMO";
             this.comboBoxTMO.Size = new System.Drawing.Size(121, 21);
@@ -126,7 +140,25 @@ namespace GSK_93
             // comboBoxVertex
             // 
             this.comboBoxVertex.FormattingEnabled = true;
-            this.comboBoxVertex.Items.AddRange(new object[] {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"});
+            this.comboBoxVertex.Items.AddRange(new object[] {
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
             this.comboBoxVertex.Location = new System.Drawing.Point(774, 12);
             this.comboBoxVertex.Name = "comboBoxVertex";
             this.comboBoxVertex.Size = new System.Drawing.Size(131, 21);
@@ -150,9 +182,10 @@ namespace GSK_93
             this.Controls.Add(this.pictureBox1);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "Form1";
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.ComboBox comboBoxVertex;
