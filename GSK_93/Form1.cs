@@ -435,14 +435,7 @@ namespace GSK_93
         /// </summary>
         private void Mirror(List<MyPoint> points)
         {
-            // Проверку на 2 точки
-            var m = new[,]
-            {
-                {1, 0, 0},
-                {0, 1, 0},
-                {-_points[0].X, -_points[0].Y, 1}
-            };
-            Calculation(m, points);
+            ToAndFromCenter(true, _points[0], points);
 
             var a = _points[0];
             var b = _points[1];
@@ -475,13 +468,8 @@ namespace GSK_93
             };
             Calculation(r1, points);
 
-            var m1 = new[,]
-            {
-                {1, 0, 0},
-                {0, 1, 0},
-                {_points[0].X, _points[0].Y, 1}
-            };
-            Calculation(m1, points);
+            ToAndFromCenter(false, _points[0], points);
+            _points.Clear();
         }
 
         /// <summary>
@@ -525,8 +513,7 @@ namespace GSK_93
                     {0, 1, 0},
                     {-e.X, -e.Y, 1}
                 };
-                for (var i = 0; i < pointFs.Count; i++)
-                    pointFs[i] = Matrix_1x3_x_3x3(pointFs[i], toCenter);
+                Calculation(toCenter, pointFs);
             }
             else
             {
@@ -536,8 +523,7 @@ namespace GSK_93
                     {0, 1, 0},
                     {e.X, e.Y, 1}
                 };
-                for (var i = 0; i < pointFs.Count; i++)
-                    pointFs[i] = Matrix_1x3_x_3x3(pointFs[i], fromCenter);
+                Calculation(fromCenter, pointFs);
             }
         }
 
@@ -573,6 +559,7 @@ namespace GSK_93
         private void OperationGeometric(MouseEventArgs e, List<MyPoint> buff)
         {
             _operation = comboBoxGeometric.SelectedIndex;
+            if (_figures.Count == 0) return;
             switch (_operation)
             {
                 case 1:
@@ -582,6 +569,7 @@ namespace GSK_93
                     Zoom(new float[] {e.Delta, e.Delta}, e, buff);
                     break;
                 case 3:
+                    if (_points.Count < 1) return;
                     Mirror(buff);
                     break;
             }

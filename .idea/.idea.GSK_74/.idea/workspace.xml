@@ -7,37 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157ccb06-2e6a-4747-8bba-fc0ac6ed8996" name="Changes" comment="1.1">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GSK_74/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GSK_74/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GSK_74/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74.sln" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/App.config" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/App.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Form1.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Form1.resx" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Form1.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/GSK_74.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/GSK_93.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Properties/Resources.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Properties/Resources.resx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Properties/Settings.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Properties/Settings.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/Properties/Settings.settings" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/Properties/Settings.settings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/bin/Debug/GSK_74.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/bin/Debug/GSK_93.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/bin/Debug/GSK_74.exe.config" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/bin/Debug/GSK_93.exe.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/bin/Debug/GSK_74.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/bin/Debug/GSK_93.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/DesignTimeResolveAssemblyReferences.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/DesignTimeResolveAssemblyReferences.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.Form1.resources" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.Form1.resources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.Properties.Resources.resources" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.Properties.Resources.resources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.csproj.GenerateResource.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GSK_74/obj/Debug/GSK_74.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GSK_93/obj/Debug/GSK_74.pdb" afterDir="false" />
-    </list>
+    <list default="true" id="157ccb06-2e6a-4747-8bba-fc0ac6ed8996" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +27,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/85a420b2bf614d95a7a4ca460c46dcd35a5d48/81/1eaf1b91/Control.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/edef46c9b2db4b878c98495bfdc516fa568ba8/07/55758114/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/User/source/repos/GSK_74/GSK_74/Form1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/User/source/repos/GSK_74/GSK_74/Form1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GSK_93/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -69,21 +38,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.125&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.11890244",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.folding",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="GSK_93" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/GSK_93/bin/Debug/GSK_74.exe" />
