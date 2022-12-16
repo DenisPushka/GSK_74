@@ -50,6 +50,7 @@ namespace GSK_93
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PictureMouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseMove);
             // 
             // comboBoxColor
             // 
@@ -87,7 +88,8 @@ namespace GSK_93
             "Закрашивание",
             "Поворот относительно заданного центра",
             "Масштабирование по ОХ относительно заданного центра",
-            "Зеркальное отражение относительно прямой общего положения"});
+            "Зеркальное отражение относительно прямой общего положения",
+            "Перемещение"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
             this.comboBoxGeometric.Size = new System.Drawing.Size(401, 21);
