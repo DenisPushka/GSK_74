@@ -60,7 +60,7 @@ namespace GSK_74
             this.comboBoxColor.Size = new System.Drawing.Size(121, 21);
             this.comboBoxColor.TabIndex = 1;
             this.comboBoxColor.Text = "Цвет";
-            this.comboBoxColor.SelectedIndexChanged += new System.EventHandler(this.comboBoxColor_);
+            this.comboBoxColor.SelectedIndexChanged += new System.EventHandler(this.ComboBoxColor);
             // 
             // comboBoxFigures
             // 
@@ -71,7 +71,7 @@ namespace GSK_74
             this.comboBoxFigures.Size = new System.Drawing.Size(121, 21);
             this.comboBoxFigures.TabIndex = 2;
             this.comboBoxFigures.Text = "Фигура";
-            this.comboBoxFigures.SelectedIndexChanged += new System.EventHandler(this.comboBoxFigures_);
+            this.comboBoxFigures.SelectedIndexChanged += new System.EventHandler(this.ComboBoxFigures);
             // 
             // comboBoxGeometric
             // 
@@ -92,7 +92,7 @@ namespace GSK_74
             this.buttonClear.TabIndex = 4;
             this.buttonClear.Text = "Очистить";
             this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_);
+            this.buttonClear.Click += new System.EventHandler(this.ButtonClear);
             // 
             // comboBoxTMO
             // 

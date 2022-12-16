@@ -59,7 +59,7 @@ namespace GSK_74
             _graphics = Graphics.FromImage(_bitmap);
             _points = new List<MyPoint>();
             _figures = new List<List<MyPoint>>();
-            MouseWheel += Geometric;
+            MouseWheel += TransformationGeometric;
         }
 
         // Обработчик события "Нажатие кнопки"
@@ -554,22 +554,23 @@ namespace GSK_74
         #region Выбор пользователя
 
         // Начало геометрических преобразований
-        private void Geometric(object sender, MouseEventArgs e)
+        private void TransformationGeometric(object sender, MouseEventArgs e)
         {
+            if (_figures.Count == 0) return;
             var figureBuff = _figures[_figures.Count - 1];
             if (figureBuff[0].DoTmo)
             {
-                TransformationGeometric(e, figureBuff);
-                TransformationGeometric(e, _figures[_figures.Count - 2]);
+                OperationGeometric(e, figureBuff);
+                OperationGeometric(e, _figures[_figures.Count - 2]);
                 _graphics.Clear(Color.White);
                 Tmo();
                 pictureBox1.Image = _bitmap;
             }
             else
-                TransformationGeometric(e, figureBuff);
+                OperationGeometric(e, figureBuff);
         }
 
-        private void TransformationGeometric(MouseEventArgs e, List<MyPoint> buff)
+        private void OperationGeometric(MouseEventArgs e, List<MyPoint> buff)
         {
             _operation = comboBoxGeometric.SelectedIndex;
             switch (_operation)
@@ -597,7 +598,7 @@ namespace GSK_74
         }
 
         // Выбор цвета
-        private void comboBoxColor_(object sender, EventArgs e)
+        private void ComboBoxColor(object sender, EventArgs e)
         {
             switch (comboBoxColor.SelectedIndex)
             {
@@ -617,7 +618,7 @@ namespace GSK_74
         }
 
         // Выбор фигуры для рисования
-        private void comboBoxFigures_(object sender, EventArgs e)
+        private void ComboBoxFigures(object sender, EventArgs e)
         {
             switch (comboBoxFigures.SelectedIndex)
             {
@@ -652,7 +653,7 @@ namespace GSK_74
         }
 
         // Кнопка очистки
-        private void buttonClear_(object sender, EventArgs e)
+        private void ButtonClear(object sender, EventArgs e)
         {
             _points.Clear();
             _figures.Clear();
