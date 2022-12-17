@@ -49,6 +49,7 @@ namespace GSK_74
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PictureMouseDown);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseMove);
             // 
             // comboBoxColor
             // 
@@ -75,7 +76,7 @@ namespace GSK_74
             // comboBoxGeometric
             // 
             this.comboBoxGeometric.FormattingEnabled = true;
-            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот вокруг заданного центра относительно заданного центра", "Зеркальное отражение относительно заданного центра", "Зеркальное отражение относительно горизонтальной прямой"});
+            this.comboBoxGeometric.Items.AddRange(new object[] {"Закрашивание", "Поворот вокруг заданного центра относительно заданного центра", "Зеркальное отражение относительно заданного центра", "Зеркальное отражение относительно горизонтальной прямой", "Перемещение"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
             this.comboBoxGeometric.Size = new System.Drawing.Size(294, 21);
@@ -138,6 +139,7 @@ namespace GSK_74
             this.Controls.Add(this.pictureBox1);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "Form1";
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseMove);
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

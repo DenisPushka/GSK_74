@@ -51,6 +51,9 @@ namespace GSK_74
         /// Список фигур
         /// </summary>
         private readonly List<List<MyPoint>> _figures;
+        
+        private bool checkFigure;
+        private Point pictureBoxMousePosition;
 
         public Form1()
         {
@@ -66,6 +69,7 @@ namespace GSK_74
         private void PictureMouseDown(object sender, MouseEventArgs e)
         {
             _operation = comboBoxGeometric.SelectedIndex;
+            pictureBoxMousePosition = e.Location;
             if (_operation == 0 && _isPaintFigure)
             {
                 switch (_figure)
@@ -100,6 +104,10 @@ namespace GSK_74
                 Fill(_figures[_figures.Count - 1]);
                 _isPaintFigure = false;
             }
+            else if (_operation == 4 && _figures.Count != 0)
+            {
+                ThisFigure(e);
+            }
             // Добавление точки
             else if (MouseButtons.Left == e.Button)
             {
@@ -123,7 +131,14 @@ namespace GSK_74
 
             pictureBox1.Image = _bitmap;
         }
-
+        
+        // Обработчик события
+        private void PictureBoxMouseMove (object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && _operation == 4 & checkFigure)
+                MoveFigure(e);
+        }
+        
         // Поиск мин/макс Y
         private float[] SearchYMinAndMax(List<MyPoint> pointFs)
         {
@@ -518,6 +533,58 @@ namespace GSK_74
             _points.Clear();
         }
 
+        // Проверка на выделение фигуры
+        private void ThisFigure (MouseEventArgs e)
+        {
+            if (ThisFigure(e.X, e.Y, _figures[_figures.Count - 1]))
+            {
+                _graphics.DrawEllipse(new Pen(Color.Blue), e.X - 2, e.Y - 2, 10, 10);
+                checkFigure = true;
+            }
+            else
+                checkFigure = false;
+        }
+
+        public bool ThisFigure (int mx, int my, List<MyPoint> points)
+        {
+            var m = 0;
+            for (var i = 0; i <= points.Count - 1; i++)
+            {
+                var k = i < points.Count - 1 ? i + 1 : 0;
+                var pi = points[i];
+                var pk = points[k];
+                if ((pi.Y < my) & (pk.Y >= my) | (pi.Y >= my) & (pk.Y < my)
+                    && (my - pi.Y) * (pk.X - pi.X) / (pk.Y - pi.Y) + pi.X < mx)
+                    m++;
+            }
+
+            return m % 2 == 1;
+        }
+
+
+        // Плоскол-параллельное перемещение
+        private void MoveFigure (MouseEventArgs e)
+        {
+            var f = _figures[_figures.Count - 1];
+            Move(e.X - pictureBoxMousePosition.X, e.Y - pictureBoxMousePosition.Y, f);
+            _graphics.Clear(pictureBox1.BackColor);
+            Fill(f);
+            pictureBoxMousePosition = e.Location;
+        }
+
+        private void Move (int dx, int dy, List<MyPoint> points)
+        {
+            for (var i = 0; i <= points.Count - 1; i++)
+            {
+                var buffer = new MyPoint
+                {
+                    X = points[i].X + dx,
+                    Y = points[i].Y + dy
+                };
+                points[i] = buffer;
+            }
+        }
+        
         private static void ToAndFromCenter(bool start, MyPoint e, List<MyPoint> pointFs)
         {
             if (start)
