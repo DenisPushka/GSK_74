@@ -126,7 +126,7 @@ namespace GSK_93
         private float[] SearchYMinAndMax (List<MyPoint> pointFs)
         {
             if (pointFs.Count == 0)
-                return new float[] { 0, 0, 0 };
+                return new float[] { 0, 0 };
 
             var min = pointFs[0].Y;
             var max = pointFs[0].Y;
@@ -138,6 +138,25 @@ namespace GSK_93
 
             min = min < 0 ? 0 : min;
             max = max > pictureBox1.Height ? pictureBox1.Height : max;
+            return new[] { min, max };
+        }
+
+        // Поиск мин/макс X
+        private float[] SearchXMinAndMax (List<MyPoint> pointFs)
+        {
+            if (pointFs.Count == 0)
+                return new float[] { 0, 0 };
+
+            var min = pointFs[0].X;
+            var max = pointFs[0].X;
+            foreach (var t in pointFs)
+            {
+                min = t.X < min ? t.X : min;
+                max = t.X < max ? max : t.X;
+            }
+
+            min = min < 0 ? 0 : min;
+            max = max > pictureBox1.Width ? pictureBox1.Width : max;
             return new[] { min, max };
         }
 
@@ -449,43 +468,23 @@ namespace GSK_93
         /// <summary>
         ///  Отражение
         /// </summary>
-        private void Mirror (List<MyPoint> points)
+        private void Mirror (List<MyPoint> points, MouseEventArgs e)
         {
-            ToAndFromCenter(true, _points[0], points);
+            var arrY = SearchYMinAndMax(points);
+            var pointCenterMirror = new MyPoint(e.X, (arrY[1] + arrY[0]) / 2);
+            ToAndFromCenter(true, pointCenterMirror, points);
 
-            var a = _points[0];
-            var b = _points[1];
-            var dx = b.X - a.X;
-            var dy = b.Y - a.Y;
-            var d = Math.Sqrt(dx * dx + dy * dy);
-            var cos = (float) (dx / d);
-            var sin = (float) (dy / d);
-
-            var r = new[,]
-            {
-                {cos, -sin, 0},
-                {sin, cos, 0},
-                {0, 0, 1}
-            };
-            Calculation(r, points);
             var s = new float[,]
             {
-                {1, 0, 0},
-                {0, -1, 0},
+                {-1, 0, 0},
+                {0, 1, 0},
                 {0, 0, 1}
             };
             Calculation(s, points);
 
-            var r1 = new[,]
-            {
-                {cos, sin, 0},
-                {-sin, cos, 0},
-                {0, 0, 1}
-            };
-            Calculation(r1, points);
-
-            ToAndFromCenter(false, _points[0], points);
+            ToAndFromCenter(false, pointCenterMirror, points);
             _points.Clear();
+            _graphics.DrawLine(_drawPen, new Point(e.X, 0), new Point(e.X, pictureBox1.Height));
         }
 
         /// <summary>
@@ -494,15 +493,13 @@ namespace GSK_93
         /// <param name="zoom">коэфициет увеличения</param>
         /// <param name="em">центр с координатами</param>
         /// <param name="points">Фигура</param>
-        private static void Zoom (float[] zoom, MouseEventArgs em, List<MyPoint> points)
+        private void Zoom (float zoom, MouseEventArgs em, List<MyPoint> points)
         {
-            if (zoom[0] <= 0) zoom[0] = -0.1f;
-            if (zoom[1] <= 0) zoom[1] = -0.1f;
-            if (zoom[0] >= 0) zoom[0] = 0.1f;
-            if (zoom[1] >= 0) zoom[1] = 0.1f;
+            if (zoom <= 0) zoom = -0.1f;
+            else zoom = 0.1f;
 
-            var sx = 1 + zoom[0];
-            const int sy = 1;
+            var sx = 1 + zoom;
+            var sy = 1 + zoom;
             float[,] matrix =
             {
                 {sx, 0, 0},
@@ -510,7 +507,10 @@ namespace GSK_93
                 {0, 0, 1}
             };
 
-            var e = new MyPoint(em.X, em.Y);
+            var arY = SearchYMinAndMax(points);
+            var arX = SearchXMinAndMax(points);
+
+            var e = new MyPoint((arY[0] + arY[1]) / 2, (arX[0] + arX[1]) / 2);
             ToAndFromCenter(true, e, points);
 
             for (var i = 0; i < points.Count; i++)
@@ -634,11 +634,10 @@ namespace GSK_93
                     Rotation(e.Delta, e, buff);
                     break;
                 case 2:
-                    Zoom(new float[] { e.Delta, e.Delta }, e, buff);
+                    Zoom(e.Delta, e, buff);
                     break;
                 case 3:
-                    if (_points.Count < 1) return;
-                    Mirror(buff);
+                    Mirror(buff, e);
                     break;
             }
 

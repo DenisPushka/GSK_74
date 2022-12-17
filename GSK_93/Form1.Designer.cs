@@ -87,8 +87,8 @@ namespace GSK_93
             this.comboBoxGeometric.Items.AddRange(new object[] {
             "Закрашивание",
             "Поворот относительно заданного центра",
-            "Масштабирование по ОХ относительно заданного центра",
-            "Зеркальное отражение относительно прямой общего положения",
+            "Пропорциональное масштабирование относительно центра фигуры",
+            "Зеркальное отражение относительно вертикальной прямой",
             "Перемещение"});
             this.comboBoxGeometric.Location = new System.Drawing.Point(502, 260);
             this.comboBoxGeometric.Name = "comboBoxGeometric";
